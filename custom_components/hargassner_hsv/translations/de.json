@@ -1,0 +1,412 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mit dem Datenlogger verbinden",
+        "description": "Nur lesende Verbindung zum Pi, der die Heizung aufzeichnet.",
+        "data": {
+          "host": "Adresse",
+          "port": "Port",
+          "token": "Token"
+        },
+        "data_description": {
+          "host": "IP-Adresse oder Name des Raspberry Pi, auf dem hsv-web läuft.",
+          "port": "Port von hsv-web, meist 8080.",
+          "token": "Auf dem Pi anzeigen mit: cat ~/heizung/ha_token"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Neuer Token",
+        "data": {
+          "token": "Token"
+        },
+        "data_description": {
+          "token": "Auf dem Pi anzeigen mit: cat ~/heizung/ha_token"
+        }
+      },
+      "reconfigure": {
+        "title": "Verbindung ändern",
+        "data": {
+          "host": "Adresse",
+          "port": "Port",
+          "token": "Token"
+        },
+        "data_description": {
+          "host": "IP-Adresse oder Name des Raspberry Pi, auf dem hsv-web läuft.",
+          "port": "Port von hsv-web, meist 8080.",
+          "token": "Auf dem Pi anzeigen mit: cat ~/heizung/ha_token"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Keine Verbindung zum Pi.",
+      "invalid_auth": "Der Token wurde abgelehnt.",
+      "unsupported_api": "Der Pi spricht eine Schnittstellenversion, die diese Integration nicht kennt."
+    },
+    "abort": {
+      "already_configured": "Diese Anlage ist bereits eingerichtet.",
+      "reauth_successful": "Token aktualisiert.",
+      "reconfigure_successful": "Verbindung aktualisiert.",
+      "wrong_installation": "Das ist eine andere Anlage."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Geräte",
+        "description": "Wähle, welche Geräte angelegt werden. Den Stromzähler abwählen, wenn er schon anders eingebunden ist.",
+        "data": {
+          "sources": "Geräte"
+        }
+      }
+    }
+  },
+  "selector": {
+    "sources": {
+      "options": {
+        "boiler": "Kessel",
+        "solar": "Solarthermie",
+        "grid": "Stromzähler",
+        "dairy_room": "Milchkammer",
+        "weather": "Wetter (Open-Meteo)",
+        "logger": "Datenlogger"
+      }
+    }
+  },
+  "device": {
+    "boiler": {
+      "name": "Kessel"
+    },
+    "solar": {
+      "name": "Solarthermie"
+    },
+    "grid": {
+      "name": "Stromzähler"
+    },
+    "dairy_room": {
+      "name": "Milchkammer"
+    },
+    "weather": {
+      "name": "Wetter (Open-Meteo)"
+    },
+    "logger": {
+      "name": "Datenlogger"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "boiler_state": {
+        "name": "Kesselzustand",
+        "state": {
+          "off": "Heizung aus",
+          "refill_soon": "Pellets bald nachfüllen",
+          "refill": "Pellets nachfüllen",
+          "grate_check": "Rost-Zu-Check",
+          "start": "Kessel Start",
+          "fuel_feed_ignition_check": "ES Fördern / Zündüberwachung",
+          "ignition": "Zündung",
+          "full_load": "Leistungsbrand",
+          "ember_hold": "Gluterhaltung",
+          "deashing_prepare": "Entaschung einleiten",
+          "burnout": "Ausbrand abwarten",
+          "deashing": "Entaschung",
+          "cleaning_start": "Reinigung Start",
+          "cleaning": "Reinigung",
+          "cleaning_end": "Reinigung Ende",
+          "unknown": "Unbekannt"
+        }
+      },
+      "boiler_temp": {
+        "name": "Kesseltemperatur"
+      },
+      "boiler_target": {
+        "name": "Kesselsolltemperatur"
+      },
+      "flue_gas_temp": {
+        "name": "Abgastemperatur"
+      },
+      "o2": {
+        "name": "Restsauerstoff"
+      },
+      "o2_target": {
+        "name": "Restsauerstoff Soll"
+      },
+      "output": {
+        "name": "Kesselleistung"
+      },
+      "boiler_heat_power": {
+        "name": "Kesselwärme aktuell"
+      },
+      "feed_rate": {
+        "name": "Förderrate"
+      },
+      "draft_fan": {
+        "name": "Saugzugdrehzahl"
+      },
+      "draft_fan_target": {
+        "name": "Saugzug Soll"
+      },
+      "air": {
+        "name": "Luftmenge"
+      },
+      "air_corrected": {
+        "name": "Luft nach Lambdakorrektur"
+      },
+      "dhw_temp": {
+        "name": "Boiler oben"
+      },
+      "hk1_flow_temp": {
+        "name": "Vorlauf HK1"
+      },
+      "hk1_flow_target": {
+        "name": "Vorlauf HK1 Soll"
+      },
+      "room_temp": {
+        "name": "Raumtemperatur"
+      },
+      "outdoor_temp": {
+        "name": "Außentemperatur (Kesselfühler)"
+      },
+      "outdoor_avg": {
+        "name": "Außentemperatur gemittelt"
+      },
+      "combustion_efficiency": {
+        "name": "Feuerungstechnischer Wirkungsgrad"
+      },
+      "dhw_mode": {
+        "name": "Boiler-Betriebsart",
+        "state": {
+          "loading": "Wird geladen",
+          "residual_heat": "Restwärme",
+          "off": "Aus",
+          "other": "Sonstiges"
+        }
+      },
+      "hk1_mode": {
+        "name": "HK1-Betriebsart",
+        "state": {
+          "heating": "Heizen",
+          "residual_heat": "Restwärme",
+          "summer_off": "Sommerabschaltung",
+          "setback": "Absenkung",
+          "off": "Aus",
+          "other": "Sonstiges"
+        }
+      },
+      "feed_screw_current": {
+        "name": "Strom Einschubschnecke"
+      },
+      "room_discharge_current": {
+        "name": "Strom Raumaustragung"
+      },
+      "grate_current": {
+        "name": "Strom Schieberost"
+      },
+      "cleaning_current": {
+        "name": "Strom Putzeinrichtung"
+      },
+      "counter_a": {
+        "name": "Zähler A"
+      },
+      "counter_b": {
+        "name": "Zähler B"
+      },
+      "counter_c": {
+        "name": "Zähler C"
+      },
+      "boiler_heat_today": {
+        "name": "Kesselwärme heute"
+      },
+      "pellets_today": {
+        "name": "Pellets heute"
+      },
+      "burner_starts_today": {
+        "name": "Brennstarts heute"
+      },
+      "burn_time_today": {
+        "name": "Brenndauer heute"
+      },
+      "active_time_today": {
+        "name": "Aktivzeit heute"
+      },
+      "boiler_heat_total": {
+        "name": "Kesselwärme gesamt"
+      },
+      "pellets_total": {
+        "name": "Pellets gesamt"
+      },
+      "burner_starts_total": {
+        "name": "Brennstarts gesamt"
+      },
+      "burn_time_total": {
+        "name": "Brenndauer gesamt"
+      },
+      "collector_temp": {
+        "name": "Kollektortemperatur"
+      },
+      "tank_bottom_temp": {
+        "name": "Speicher unten"
+      },
+      "solar_spread": {
+        "name": "Spreizung"
+      },
+      "solar_heat_power": {
+        "name": "Solarwärme aktuell"
+      },
+      "solar_flow": {
+        "name": "Volumenstrom (fest eingestellt)"
+      },
+      "solar_meter_raw": {
+        "name": "Wärmemengenzähler ESR21 (roh)"
+      },
+      "solar_heat_total": {
+        "name": "Solarwärme gesamt"
+      },
+      "solar_heat_today": {
+        "name": "Solarwärme heute"
+      },
+      "solar_pump_hours_today": {
+        "name": "Laufzeit Solarpumpe heute"
+      },
+      "solar_pump_starts_today": {
+        "name": "Starts Solarpumpe heute"
+      },
+      "grid_import_power": {
+        "name": "Netzbezug"
+      },
+      "grid_export_power": {
+        "name": "Einspeisung"
+      },
+      "grid_net_power": {
+        "name": "Netto-Bezug"
+      },
+      "grid_import_energy": {
+        "name": "Bezug gesamt (1.8.0)"
+      },
+      "grid_export_energy": {
+        "name": "Einspeisung gesamt (2.8.0)"
+      },
+      "grid_reactive_import_power": {
+        "name": "Blindleistung Q+"
+      },
+      "grid_reactive_export_power": {
+        "name": "Blindleistung Q-"
+      },
+      "grid_reactive_import_energy": {
+        "name": "Blindenergie R+"
+      },
+      "grid_reactive_export_energy": {
+        "name": "Blindenergie R-"
+      },
+      "grid_collection_energy": {
+        "name": "Inkasso-Energie (1.128.0)"
+      },
+      "grid_import_today": {
+        "name": "Bezug heute"
+      },
+      "grid_export_today": {
+        "name": "Einspeisung heute"
+      },
+      "base_load": {
+        "name": "Grundlast"
+      },
+      "extra_load_burning": {
+        "name": "Mehrbezug im Brand"
+      },
+      "dairy_power": {
+        "name": "Leistung"
+      },
+      "dairy_energy": {
+        "name": "Energie"
+      },
+      "dairy_energy_today": {
+        "name": "Energie heute"
+      },
+      "weather_temperature": {
+        "name": "Temperatur"
+      },
+      "weather_apparent_temperature": {
+        "name": "Gefühlte Temperatur"
+      },
+      "weather_humidity": {
+        "name": "Luftfeuchte"
+      },
+      "weather_precipitation": {
+        "name": "Niederschlag"
+      },
+      "weather_cloud_cover": {
+        "name": "Bewölkung"
+      },
+      "weather_pressure": {
+        "name": "Luftdruck"
+      },
+      "weather_wind": {
+        "name": "Wind"
+      },
+      "weather_gusts": {
+        "name": "Böen"
+      },
+      "weather_wind_direction": {
+        "name": "Windrichtung"
+      },
+      "weather_radiation": {
+        "name": "Einstrahlung"
+      },
+      "weather_code": {
+        "name": "Wettercode (WMO)"
+      },
+      "age_boiler": {
+        "name": "Datenalter Kessel"
+      },
+      "age_solar": {
+        "name": "Datenalter Solar"
+      },
+      "age_grid": {
+        "name": "Datenalter Stromzähler"
+      },
+      "age_dairy_room": {
+        "name": "Datenalter Milchkammer"
+      },
+      "age_weather": {
+        "name": "Datenalter Wetter"
+      },
+      "database_size": {
+        "name": "Datenbankgröße"
+      },
+      "disk_free": {
+        "name": "Freier Speicher"
+      }
+    },
+    "binary_sensor": {
+      "solar_pump": {
+        "name": "Solarpumpe"
+      },
+      "service_hsv_logger": {
+        "name": "Dienst Kessel-Logger"
+      },
+      "service_hsv_solar": {
+        "name": "Dienst Solar-Logger"
+      },
+      "service_hsv_strom": {
+        "name": "Dienst Strom-Logger"
+      },
+      "service_hsv_web": {
+        "name": "Dienst Weboberfläche"
+      },
+      "service_hsv_waechter": {
+        "name": "Dienst Wächter"
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "Keine Verbindung zum Pi."
+    },
+    "invalid_auth": {
+      "message": "Der Token wurde abgelehnt."
+    },
+    "unsupported_api": {
+      "message": "Nicht unterstützte Schnittstellenversion {version} am Pi; bitte die Integration aktualisieren."
+    }
+  }
+}

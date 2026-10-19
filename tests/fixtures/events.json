@@ -1,0 +1,63 @@
+{
+  "api_version": "1.0",
+  "last_id": 5322,
+  "events": [
+    {
+      "id": 5315,
+      "ts": "2026-10-19T10:54:05+02:00",
+      "controller_time": "10:53:38",
+      "text": "Zündung Einschub",
+      "type": "ignition"
+    },
+    {
+      "id": 5316,
+      "ts": "2026-10-19T10:55:44+02:00",
+      "controller_time": "10:55:16",
+      "text": "Leistungsbrand",
+      "type": "full_load"
+    },
+    {
+      "id": 5317,
+      "ts": "2026-10-19T11:00:27+02:00",
+      "controller_time": "11:00:00",
+      "text": "BZ Speichern",
+      "type": "other"
+    },
+    {
+      "id": 5318,
+      "ts": "2026-10-19T11:00:31+02:00",
+      "controller_time": "11:00:04",
+      "text": "HK1 Absenken Rampe",
+      "type": "heating_circuit"
+    },
+    {
+      "id": 5319,
+      "ts": "2026-10-19T11:00:31+02:00",
+      "controller_time": "11:00:04",
+      "text": "Gluterhaltung",
+      "type": "ember_hold"
+    },
+    {
+      "id": 5320,
+      "ts": "2026-10-19T11:00:31+02:00",
+      "controller_time": "11:00:04",
+      "text": "ES Aus",
+      "type": "off"
+    },
+    {
+      "id": 5321,
+      "ts": "2026-10-19T11:15:33+02:00",
+      "controller_time": "11:15:05",
+      "text": "HK1 Absenken",
+      "type": "heating_circuit"
+    },
+    {
+      "id": 5322,
+      "ts": "2026-10-19T11:30:31+02:00",
+      "controller_time": "11:30:04",
+      "text": "Lambdaheizung aus",
+      "type": "off"
+    }
+  ],
+  "more": false
+}

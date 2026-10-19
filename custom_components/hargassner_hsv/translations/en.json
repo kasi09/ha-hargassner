@@ -1,0 +1,412 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to the data logger",
+        "description": "Read-only connection to the Pi that records the boiler.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "token": "Token"
+        },
+        "data_description": {
+          "host": "IP address or host name of the Raspberry Pi running hsv-web.",
+          "port": "Port of hsv-web, usually 8080.",
+          "token": "Shown on the Pi with: cat ~/heizung/ha_token"
+        }
+      },
+      "reauth_confirm": {
+        "title": "New token",
+        "data": {
+          "token": "Token"
+        },
+        "data_description": {
+          "token": "Shown on the Pi with: cat ~/heizung/ha_token"
+        }
+      },
+      "reconfigure": {
+        "title": "Change connection",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "token": "Token"
+        },
+        "data_description": {
+          "host": "IP address or host name of the Raspberry Pi running hsv-web.",
+          "port": "Port of hsv-web, usually 8080.",
+          "token": "Shown on the Pi with: cat ~/heizung/ha_token"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to the Pi.",
+      "invalid_auth": "The token was rejected.",
+      "unsupported_api": "The Pi speaks an API version this integration does not support."
+    },
+    "abort": {
+      "already_configured": "This installation is already configured.",
+      "reauth_successful": "Token updated.",
+      "reconfigure_successful": "Connection updated.",
+      "wrong_installation": "This is a different installation."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Devices",
+        "description": "Choose which devices to create. Deselect the meter if it is already integrated elsewhere.",
+        "data": {
+          "sources": "Devices"
+        }
+      }
+    }
+  },
+  "selector": {
+    "sources": {
+      "options": {
+        "boiler": "Boiler",
+        "solar": "Solar thermal",
+        "grid": "Electricity meter",
+        "dairy_room": "Dairy room",
+        "weather": "Weather (Open-Meteo)",
+        "logger": "Data logger"
+      }
+    }
+  },
+  "device": {
+    "boiler": {
+      "name": "Boiler"
+    },
+    "solar": {
+      "name": "Solar thermal"
+    },
+    "grid": {
+      "name": "Electricity meter"
+    },
+    "dairy_room": {
+      "name": "Dairy room"
+    },
+    "weather": {
+      "name": "Weather (Open-Meteo)"
+    },
+    "logger": {
+      "name": "Data logger"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "boiler_state": {
+        "name": "Boiler state",
+        "state": {
+          "off": "Off",
+          "refill_soon": "Refill pellets soon",
+          "refill": "Refill pellets",
+          "grate_check": "Grate check",
+          "start": "Boiler start",
+          "fuel_feed_ignition_check": "Fuel feed / ignition check",
+          "ignition": "Ignition",
+          "full_load": "Full load",
+          "ember_hold": "Ember hold",
+          "deashing_prepare": "Preparing de-ashing",
+          "burnout": "Burnout",
+          "deashing": "De-ashing",
+          "cleaning_start": "Cleaning start",
+          "cleaning": "Cleaning",
+          "cleaning_end": "Cleaning end",
+          "unknown": "Unknown"
+        }
+      },
+      "boiler_temp": {
+        "name": "Boiler temperature"
+      },
+      "boiler_target": {
+        "name": "Boiler target temperature"
+      },
+      "flue_gas_temp": {
+        "name": "Flue gas temperature"
+      },
+      "o2": {
+        "name": "Residual oxygen"
+      },
+      "o2_target": {
+        "name": "Residual oxygen target"
+      },
+      "output": {
+        "name": "Boiler output"
+      },
+      "boiler_heat_power": {
+        "name": "Boiler heat (current)"
+      },
+      "feed_rate": {
+        "name": "Fuel feed rate"
+      },
+      "draft_fan": {
+        "name": "Draft fan speed"
+      },
+      "draft_fan_target": {
+        "name": "Draft fan target"
+      },
+      "air": {
+        "name": "Air"
+      },
+      "air_corrected": {
+        "name": "Air after lambda correction"
+      },
+      "dhw_temp": {
+        "name": "Hot water tank (top)"
+      },
+      "hk1_flow_temp": {
+        "name": "Heating circuit 1 flow"
+      },
+      "hk1_flow_target": {
+        "name": "Heating circuit 1 flow target"
+      },
+      "room_temp": {
+        "name": "Room temperature"
+      },
+      "outdoor_temp": {
+        "name": "Outdoor temperature (boiler sensor)"
+      },
+      "outdoor_avg": {
+        "name": "Outdoor temperature averaged"
+      },
+      "combustion_efficiency": {
+        "name": "Combustion efficiency"
+      },
+      "dhw_mode": {
+        "name": "Hot water mode",
+        "state": {
+          "loading": "Loading",
+          "residual_heat": "Residual heat",
+          "off": "Off",
+          "other": "Other"
+        }
+      },
+      "hk1_mode": {
+        "name": "Heating circuit 1 mode",
+        "state": {
+          "heating": "Heating",
+          "residual_heat": "Residual heat",
+          "summer_off": "Summer shutdown",
+          "setback": "Setback",
+          "off": "Off",
+          "other": "Other"
+        }
+      },
+      "feed_screw_current": {
+        "name": "Feed screw current"
+      },
+      "room_discharge_current": {
+        "name": "Room discharge current"
+      },
+      "grate_current": {
+        "name": "Grate current"
+      },
+      "cleaning_current": {
+        "name": "Cleaning current"
+      },
+      "counter_a": {
+        "name": "Counter A"
+      },
+      "counter_b": {
+        "name": "Counter B"
+      },
+      "counter_c": {
+        "name": "Counter C"
+      },
+      "boiler_heat_today": {
+        "name": "Boiler heat today"
+      },
+      "pellets_today": {
+        "name": "Pellets today"
+      },
+      "burner_starts_today": {
+        "name": "Burner starts today"
+      },
+      "burn_time_today": {
+        "name": "Full-load time today"
+      },
+      "active_time_today": {
+        "name": "Active time today"
+      },
+      "boiler_heat_total": {
+        "name": "Boiler heat total"
+      },
+      "pellets_total": {
+        "name": "Pellets total"
+      },
+      "burner_starts_total": {
+        "name": "Burner starts total"
+      },
+      "burn_time_total": {
+        "name": "Full-load time total"
+      },
+      "collector_temp": {
+        "name": "Collector temperature"
+      },
+      "tank_bottom_temp": {
+        "name": "Tank bottom temperature"
+      },
+      "solar_spread": {
+        "name": "Collector-tank spread"
+      },
+      "solar_heat_power": {
+        "name": "Solar heat (current)"
+      },
+      "solar_flow": {
+        "name": "Flow rate (fixed setting)"
+      },
+      "solar_meter_raw": {
+        "name": "Heat meter ESR21 (raw)"
+      },
+      "solar_heat_total": {
+        "name": "Solar heat total"
+      },
+      "solar_heat_today": {
+        "name": "Solar heat today"
+      },
+      "solar_pump_hours_today": {
+        "name": "Solar pump runtime today"
+      },
+      "solar_pump_starts_today": {
+        "name": "Solar pump starts today"
+      },
+      "grid_import_power": {
+        "name": "Grid import power"
+      },
+      "grid_export_power": {
+        "name": "Grid export power"
+      },
+      "grid_net_power": {
+        "name": "Grid net power"
+      },
+      "grid_import_energy": {
+        "name": "Grid import energy (1.8.0)"
+      },
+      "grid_export_energy": {
+        "name": "Grid export energy (2.8.0)"
+      },
+      "grid_reactive_import_power": {
+        "name": "Reactive power Q+"
+      },
+      "grid_reactive_export_power": {
+        "name": "Reactive power Q-"
+      },
+      "grid_reactive_import_energy": {
+        "name": "Reactive energy R+"
+      },
+      "grid_reactive_export_energy": {
+        "name": "Reactive energy R-"
+      },
+      "grid_collection_energy": {
+        "name": "Collection energy (1.128.0)"
+      },
+      "grid_import_today": {
+        "name": "Grid import today"
+      },
+      "grid_export_today": {
+        "name": "Grid export today"
+      },
+      "base_load": {
+        "name": "Base load"
+      },
+      "extra_load_burning": {
+        "name": "Extra load while burning"
+      },
+      "dairy_power": {
+        "name": "Power"
+      },
+      "dairy_energy": {
+        "name": "Energy"
+      },
+      "dairy_energy_today": {
+        "name": "Energy today"
+      },
+      "weather_temperature": {
+        "name": "Temperature"
+      },
+      "weather_apparent_temperature": {
+        "name": "Apparent temperature"
+      },
+      "weather_humidity": {
+        "name": "Humidity"
+      },
+      "weather_precipitation": {
+        "name": "Precipitation"
+      },
+      "weather_cloud_cover": {
+        "name": "Cloud cover"
+      },
+      "weather_pressure": {
+        "name": "Pressure"
+      },
+      "weather_wind": {
+        "name": "Wind speed"
+      },
+      "weather_gusts": {
+        "name": "Gusts"
+      },
+      "weather_wind_direction": {
+        "name": "Wind direction"
+      },
+      "weather_radiation": {
+        "name": "Solar radiation"
+      },
+      "weather_code": {
+        "name": "Weather code (WMO)"
+      },
+      "age_boiler": {
+        "name": "Data age boiler"
+      },
+      "age_solar": {
+        "name": "Data age solar"
+      },
+      "age_grid": {
+        "name": "Data age meter"
+      },
+      "age_dairy_room": {
+        "name": "Data age sub-meter"
+      },
+      "age_weather": {
+        "name": "Data age weather"
+      },
+      "database_size": {
+        "name": "Database size"
+      },
+      "disk_free": {
+        "name": "Free disk space"
+      }
+    },
+    "binary_sensor": {
+      "solar_pump": {
+        "name": "Solar pump"
+      },
+      "service_hsv_logger": {
+        "name": "Service boiler logger"
+      },
+      "service_hsv_solar": {
+        "name": "Service solar logger"
+      },
+      "service_hsv_strom": {
+        "name": "Service meter logger"
+      },
+      "service_hsv_web": {
+        "name": "Service web"
+      },
+      "service_hsv_waechter": {
+        "name": "Service watchdog"
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "Cannot connect to the Pi."
+    },
+    "invalid_auth": {
+      "message": "The token was rejected."
+    },
+    "unsupported_api": {
+      "message": "Unsupported Pi API version {version}; please update the integration."
+    }
+  }
+}

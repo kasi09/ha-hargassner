@@ -1,0 +1,44 @@
+{
+  "api_version": "1.0",
+  "time": "2026-10-19T11:39:44+02:00",
+  "today_start": "2026-10-19T00:00:00+02:00",
+  "boiler": {
+    "heat_today_kwh": 32.24,
+    "pellets_today_kg": 7.46,
+    "starts_today": 11,
+    "burn_minutes_today": 164.9,
+    "active_minutes_today": 399.2,
+    "heat_total_kwh": 807.82,
+    "pellets_total_kg": 186.99,
+    "starts_total": 422,
+    "burn_minutes_total": 3787.2
+  },
+  "solar": {
+    "energy_today_kwh": 7.7,
+    "energy_total_kwh": 495.8,
+    "energy_total_since": "2026-09-19",
+    "pump_hours_today": 2.57,
+    "pump_starts_today": 7
+  },
+  "grid": {
+    "import_today_kwh": 4.914,
+    "export_today_kwh": 0.0,
+    "base_load_w": 139,
+    "extra_load_burning_w": 224,
+    "extra_load_days": 8
+  },
+  "dairy_room": {
+    "energy_today_kwh": 0.0
+  },
+  "system": {
+    "services": {
+      "hsv-logger": "active",
+      "hsv-solar": "active",
+      "hsv-strom": "active",
+      "hsv-web": "active",
+      "hsv-waechter": "active"
+    },
+    "db_mb": 2269.3,
+    "free_gb": 449.1
+  }
+}

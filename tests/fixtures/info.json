@@ -1,0 +1,31 @@
+{
+  "api_version": "1.0",
+  "software": "2026-10-19",
+  "time": "2026-10-19T11:39:42+02:00",
+  "installation_id": "00000000-0000-4000-8000-000000000001",
+  "manufacturer": "Hargassner",
+  "model": "HSV 22",
+  "controller": "Lambdatronic",
+  "firmware": {
+    "eprom": "282182h",
+    "display": "SMS V4.3h"
+  },
+  "sources": {
+    "boiler": true,
+    "solar": true,
+    "grid": true,
+    "weather": true,
+    "dairy_room": true
+  },
+  "assumptions": {
+    "nominal_power_kw": 22.0,
+    "cycle_s": 0.65,
+    "heating_value_kwh_kg": 4.8,
+    "boiler_efficiency": 0.9,
+    "solar_flow_l_h": 48.0,
+    "solar_antifreeze_factor": 0.93,
+    "solar_scale_mismatch_factor": 6.6,
+    "solar_correction_factor": null
+  },
+  "assumptions_version": "6df6ccdda8e6"
+}

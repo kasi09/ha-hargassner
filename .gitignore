@@ -1,0 +1,19 @@
+# Geheimnisse - niemals ins Repo
+*token*
+*.secret
+secrets.yaml
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+# Frontend
+node_modules/
+frontend/dist/
+custom_components/hargassner_hsv/frontend/*.js
+playwright-report/
+test-results/

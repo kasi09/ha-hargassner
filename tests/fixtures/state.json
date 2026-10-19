@@ -1,0 +1,110 @@
+{
+  "api_version": "1.0",
+  "time": "2026-10-19T11:39:42+02:00",
+  "sources": {
+    "boiler": {
+      "ts": "2026-10-19T11:39:37+02:00",
+      "age_s": 4.9,
+      "age_ambiguous": false,
+      "fresh": true
+    },
+    "solar": {
+      "ts": "2026-10-19T11:39:24+02:00",
+      "age_s": 18.1,
+      "age_ambiguous": false,
+      "fresh": true
+    },
+    "grid": {
+      "ts": "2026-10-19T11:39:11+02:00",
+      "age_s": 31.1,
+      "age_ambiguous": false,
+      "fresh": true
+    },
+    "weather": {
+      "ts": "2026-10-19T11:34:39+02:00",
+      "age_s": 303.1,
+      "age_ambiguous": false,
+      "fresh": true
+    },
+    "dairy_room": {
+      "ts": "2026-10-19T11:39:33+02:00",
+      "age_s": 9.1,
+      "age_ambiguous": false,
+      "fresh": true
+    }
+  },
+  "boiler": {
+    "state_code": 10,
+    "state": "ember_hold",
+    "state_text": "Gluterhaltung",
+    "boiler_temp_c": 52.0,
+    "boiler_target_c": 40.0,
+    "flue_gas_temp_c": 50.0,
+    "o2_percent": 18.3,
+    "o2_target_percent": 9.6,
+    "output_percent": 0.0,
+    "heat_power_kw": 0.0,
+    "feed_rate_percent": 0.0,
+    "draft_fan_rpm": 0.0,
+    "draft_fan_target_percent": 0.0,
+    "air_percent": 0.0,
+    "air_corrected_percent": 44.0,
+    "dhw_temp_c": 46.0,
+    "hk1_flow_temp_c": 29.2,
+    "hk1_flow_target_c": 30.0,
+    "room_temp_c": 21.8,
+    "outdoor_temp_c": 10.7,
+    "outdoor_avg_c": 11.0,
+    "efficiency_percent": null,
+    "feed_screw_current_ma": 0.0,
+    "room_discharge_current_a": 0.0,
+    "grate_current_ma": 0.0,
+    "cleaning_current_a": 0.0,
+    "counter_a": 519552,
+    "counter_b": 75335,
+    "counter_c": 5800,
+    "dhw_mode": "off",
+    "dhw_mode_since": "2026-10-18T17:29:22+02:00",
+    "hk1_mode": "setback",
+    "hk1_mode_since": "2026-10-19T11:15:33+02:00"
+  },
+  "solar": {
+    "collector_temp_c": 53.4,
+    "tank_bottom_temp_c": 43.0,
+    "spread_k": 10.4,
+    "pump_on": true,
+    "power_kw": 0.5,
+    "flow_l_h": 48.0,
+    "meter_mwh": 89.8949
+  },
+  "grid": {
+    "import_power_w": 300.0,
+    "export_power_w": 113.0,
+    "net_power_w": 187.0,
+    "import_kwh": 39716.871,
+    "export_kwh": 41.177,
+    "reactive_import_var": 25.0,
+    "reactive_export_var": 0.0,
+    "reactive_import_kvarh": 6519.01,
+    "reactive_export_kvarh": 8785.847,
+    "collection_kwh": 0.0
+  },
+  "dairy_room": {
+    "power_w": 0.0,
+    "energy_kwh": 13.519
+  },
+  "weather": {
+    "temperature_c": 11.8,
+    "apparent_temperature_c": 8.0,
+    "humidity_percent": 65.0,
+    "precipitation_mm": 0.0,
+    "weather_code": 2,
+    "cloud_cover_percent": 80.0,
+    "pressure_hpa": 1026.5,
+    "wind_kmh": 17.9,
+    "wind_direction_deg": 80.0,
+    "gusts_kmh": 31.3,
+    "radiation_w_m2": 417.0,
+    "is_day": true
+  }
+}

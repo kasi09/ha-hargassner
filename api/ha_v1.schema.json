@@ -1,0 +1,1077 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/kasi09/ha-hargassner/api/ha_v1.schema.json",
+  "title": "Hargassner HSV - Pi-Schnittstelle fuer Home Assistant, v1",
+  "description": "Vertrag zwischen hsv-web (Pi) und der Integration hargassner_hsv. Felder werden nur ergaenzt, nie umbenannt oder umgedeutet; dafuer gibt es v2. Unbekannte Felder sind erlaubt und werden ignoriert. Zugriff mit 'Authorization: Bearer <token>'. Endpunkte: GET /api/ha/v1/info, /state, /totals, /events?after_id=N.",
+  "$defs": {
+    "api_version": {
+      "type": "string",
+      "pattern": "^1\\.[0-9]+$"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "age_ambiguous",
+        "age_s",
+        "fresh",
+        "ts"
+      ],
+      "properties": {
+        "ts": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "age_s": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "age_ambiguous": {
+          "type": "boolean"
+        },
+        "fresh": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "boiler": {
+      "type": "object",
+      "required": [
+        "air_corrected_percent",
+        "air_percent",
+        "boiler_target_c",
+        "boiler_temp_c",
+        "cleaning_current_a",
+        "counter_a",
+        "counter_b",
+        "counter_c",
+        "dhw_mode",
+        "dhw_mode_since",
+        "dhw_temp_c",
+        "draft_fan_rpm",
+        "draft_fan_target_percent",
+        "efficiency_percent",
+        "feed_rate_percent",
+        "feed_screw_current_ma",
+        "flue_gas_temp_c",
+        "grate_current_ma",
+        "heat_power_kw",
+        "hk1_flow_target_c",
+        "hk1_flow_temp_c",
+        "hk1_mode",
+        "hk1_mode_since",
+        "o2_percent",
+        "o2_target_percent",
+        "outdoor_avg_c",
+        "outdoor_temp_c",
+        "output_percent",
+        "room_discharge_current_a",
+        "room_temp_c",
+        "state",
+        "state_code",
+        "state_text"
+      ],
+      "properties": {
+        "state_code": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "state": {
+          "enum": [
+            "off",
+            "refill_soon",
+            "refill",
+            "grate_check",
+            "start",
+            "fuel_feed_ignition_check",
+            "ignition",
+            "full_load",
+            "ember_hold",
+            "deashing_prepare",
+            "burnout",
+            "deashing",
+            "cleaning_start",
+            "cleaning",
+            "cleaning_end",
+            "unknown",
+            null
+          ]
+        },
+        "state_text": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "boiler_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "boiler_target_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "flue_gas_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "o2_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "o2_target_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "output_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "heat_power_kw": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "feed_rate_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "draft_fan_rpm": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "draft_fan_target_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "air_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "air_corrected_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "dhw_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "hk1_flow_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "hk1_flow_target_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "room_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "outdoor_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "outdoor_avg_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "efficiency_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "feed_screw_current_ma": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "room_discharge_current_a": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "grate_current_ma": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cleaning_current_a": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "counter_a": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "counter_b": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "counter_c": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "dhw_mode": {
+          "enum": [
+            "loading",
+            "residual_heat",
+            "off",
+            "other",
+            null
+          ],
+          "description": "Betriebsart Boiler laut letzter Steuerungsmeldung 'Boiler 1 ...'"
+        },
+        "dhw_mode_since": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "hk1_mode": {
+          "enum": [
+            "heating",
+            "residual_heat",
+            "summer_off",
+            "setback",
+            "off",
+            "other",
+            null
+          ],
+          "description": "Betriebsart Heizkreis 1 laut letzter Steuerungsmeldung 'HK1 ...'"
+        },
+        "hk1_mode_since": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": true
+    },
+    "solar": {
+      "type": "object",
+      "required": [
+        "collector_temp_c",
+        "flow_l_h",
+        "meter_mwh",
+        "power_kw",
+        "pump_on",
+        "spread_k",
+        "tank_bottom_temp_c"
+      ],
+      "properties": {
+        "collector_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tank_bottom_temp_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "spread_k": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pump_on": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "power_kw": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "flow_l_h": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "meter_mwh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "grid": {
+      "type": "object",
+      "required": [
+        "collection_kwh",
+        "export_kwh",
+        "export_power_w",
+        "import_kwh",
+        "import_power_w",
+        "net_power_w",
+        "reactive_export_kvarh",
+        "reactive_export_var",
+        "reactive_import_kvarh",
+        "reactive_import_var"
+      ],
+      "properties": {
+        "import_power_w": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "export_power_w": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "net_power_w": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "import_kwh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "export_kwh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reactive_import_var": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reactive_export_var": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reactive_import_kvarh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "reactive_export_kvarh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "collection_kwh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "dairy_room": {
+      "type": "object",
+      "required": [
+        "energy_kwh",
+        "power_w"
+      ],
+      "properties": {
+        "power_w": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "energy_kwh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "weather": {
+      "type": "object",
+      "required": [
+        "apparent_temperature_c",
+        "cloud_cover_percent",
+        "gusts_kmh",
+        "humidity_percent",
+        "is_day",
+        "precipitation_mm",
+        "pressure_hpa",
+        "radiation_w_m2",
+        "temperature_c",
+        "weather_code",
+        "wind_direction_deg",
+        "wind_kmh"
+      ],
+      "properties": {
+        "temperature_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "apparent_temperature_c": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "humidity_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "precipitation_mm": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "cloud_cover_percent": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "pressure_hpa": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "wind_kmh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "wind_direction_deg": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "gusts_kmh": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "radiation_w_m2": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "weather_code": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "is_day": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "event": {
+      "type": "object",
+      "required": [
+        "controller_time",
+        "id",
+        "text",
+        "ts",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "ts": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "controller_time": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "fault",
+            "warning",
+            "parameter",
+            "refill",
+            "pellet_transport",
+            "ignition",
+            "full_load",
+            "ember_hold",
+            "deashing",
+            "cleaning",
+            "grate",
+            "dhw",
+            "heating_circuit",
+            "start",
+            "off",
+            "other"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "info": {
+      "type": "object",
+      "required": [
+        "api_version",
+        "assumptions",
+        "assumptions_version",
+        "controller",
+        "firmware",
+        "installation_id",
+        "manufacturer",
+        "model",
+        "software",
+        "sources",
+        "time"
+      ],
+      "properties": {
+        "api_version": {
+          "$ref": "#/$defs/api_version"
+        },
+        "software": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "installation_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "controller": {
+          "type": "string"
+        },
+        "firmware": {
+          "type": "object",
+          "required": [
+            "display",
+            "eprom"
+          ],
+          "properties": {
+            "eprom": {
+              "type": "string"
+            },
+            "display": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "sources": {
+          "type": "object",
+          "required": [
+            "boiler",
+            "dairy_room",
+            "grid",
+            "solar",
+            "weather"
+          ],
+          "properties": {
+            "boiler": {
+              "type": "boolean"
+            },
+            "solar": {
+              "type": "boolean"
+            },
+            "grid": {
+              "type": "boolean"
+            },
+            "weather": {
+              "type": "boolean"
+            },
+            "dairy_room": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        },
+        "assumptions": {
+          "type": "object",
+          "required": [
+            "boiler_efficiency",
+            "cycle_s",
+            "heating_value_kwh_kg",
+            "nominal_power_kw",
+            "solar_antifreeze_factor",
+            "solar_correction_factor",
+            "solar_flow_l_h",
+            "solar_scale_mismatch_factor"
+          ],
+          "properties": {
+            "nominal_power_kw": {
+              "type": "number"
+            },
+            "cycle_s": {
+              "type": "number"
+            },
+            "heating_value_kwh_kg": {
+              "type": "number"
+            },
+            "boiler_efficiency": {
+              "type": "number"
+            },
+            "solar_flow_l_h": {
+              "type": "number"
+            },
+            "solar_antifreeze_factor": {
+              "type": "number"
+            },
+            "solar_scale_mismatch_factor": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "solar_correction_factor": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "assumptions_version": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "state": {
+      "type": "object",
+      "required": [
+        "api_version",
+        "boiler",
+        "dairy_room",
+        "grid",
+        "solar",
+        "sources",
+        "time",
+        "weather"
+      ],
+      "properties": {
+        "api_version": {
+          "$ref": "#/$defs/api_version"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sources": {
+          "type": "object",
+          "required": [
+            "boiler",
+            "dairy_room",
+            "grid",
+            "solar",
+            "weather"
+          ],
+          "properties": {
+            "boiler": {
+              "$ref": "#/$defs/source"
+            },
+            "solar": {
+              "$ref": "#/$defs/source"
+            },
+            "grid": {
+              "$ref": "#/$defs/source"
+            },
+            "weather": {
+              "$ref": "#/$defs/source"
+            },
+            "dairy_room": {
+              "$ref": "#/$defs/source"
+            }
+          },
+          "additionalProperties": true
+        },
+        "boiler": {
+          "$ref": "#/$defs/boiler"
+        },
+        "solar": {
+          "$ref": "#/$defs/solar"
+        },
+        "grid": {
+          "$ref": "#/$defs/grid"
+        },
+        "dairy_room": {
+          "$ref": "#/$defs/dairy_room"
+        },
+        "weather": {
+          "$ref": "#/$defs/weather"
+        }
+      },
+      "additionalProperties": true
+    },
+    "totals": {
+      "type": "object",
+      "required": [
+        "api_version",
+        "boiler",
+        "dairy_room",
+        "grid",
+        "solar",
+        "system",
+        "time",
+        "today_start"
+      ],
+      "properties": {
+        "api_version": {
+          "$ref": "#/$defs/api_version"
+        },
+        "time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "today_start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "boiler": {
+          "type": "object",
+          "required": [
+            "active_minutes_today",
+            "burn_minutes_today",
+            "burn_minutes_total",
+            "heat_today_kwh",
+            "heat_total_kwh",
+            "pellets_today_kg",
+            "pellets_total_kg",
+            "starts_today",
+            "starts_total"
+          ],
+          "properties": {
+            "heat_today_kwh": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "pellets_today_kg": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_today": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "burn_minutes_today": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "active_minutes_today": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "heat_total_kwh": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "pellets_total_kg": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_total": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            },
+            "burn_minutes_total": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "solar": {
+          "type": "object",
+          "required": [
+            "energy_today_kwh",
+            "energy_total_kwh",
+            "energy_total_since",
+            "pump_hours_today",
+            "pump_starts_today"
+          ],
+          "properties": {
+            "energy_today_kwh": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "energy_total_kwh": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "energy_total_since": {
+              "type": "string",
+              "format": "date"
+            },
+            "pump_hours_today": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "pump_starts_today": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "grid": {
+          "type": "object",
+          "required": [
+            "base_load_w",
+            "export_today_kwh",
+            "extra_load_burning_w",
+            "extra_load_days",
+            "import_today_kwh"
+          ],
+          "properties": {
+            "import_today_kwh": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "export_today_kwh": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "base_load_w": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "extra_load_burning_w": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "extra_load_days": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "dairy_room": {
+          "type": "object",
+          "required": [
+            "energy_today_kwh"
+          ],
+          "properties": {
+            "energy_today_kwh": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        },
+        "system": {
+          "type": "object",
+          "required": [
+            "db_mb",
+            "free_gb",
+            "services"
+          ],
+          "properties": {
+            "services": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "db_mb": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "free_gb": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "events": {
+      "type": "object",
+      "required": [
+        "api_version",
+        "events",
+        "last_id",
+        "more"
+      ],
+      "properties": {
+        "api_version": {
+          "$ref": "#/$defs/api_version"
+        },
+        "last_id": {
+          "type": "integer"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/event"
+          }
+        },
+        "more": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/info"
+    },
+    {
+      "$ref": "#/$defs/state"
+    },
+    {
+      "$ref": "#/$defs/totals"
+    },
+    {
+      "$ref": "#/$defs/events"
+    }
+  ]
+}
