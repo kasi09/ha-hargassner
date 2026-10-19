@@ -59,39 +59,8 @@ SENSOR = {
     "solar_heat_today": ("Solar heat today", "Solarwärme heute"),
     "solar_pump_hours_today": ("Solar pump runtime today", "Laufzeit Solarpumpe heute"),
     "solar_pump_starts_today": ("Solar pump starts today", "Starts Solarpumpe heute"),
-    "grid_import_power": ("Grid import power", "Netzbezug"),
-    "grid_export_power": ("Grid export power", "Einspeisung"),
-    "grid_net_power": ("Grid net power", "Netto-Bezug"),
-    "grid_import_energy": ("Grid import energy (1.8.0)", "Bezug gesamt (1.8.0)"),
-    "grid_export_energy": ("Grid export energy (2.8.0)", "Einspeisung gesamt (2.8.0)"),
-    "grid_reactive_import_power": ("Reactive power Q+", "Blindleistung Q+"),
-    "grid_reactive_export_power": ("Reactive power Q-", "Blindleistung Q-"),
-    "grid_reactive_import_energy": ("Reactive energy R+", "Blindenergie R+"),
-    "grid_reactive_export_energy": ("Reactive energy R-", "Blindenergie R-"),
-    "grid_collection_energy": ("Collection energy (1.128.0)", "Inkasso-Energie (1.128.0)"),
-    "grid_import_today": ("Grid import today", "Bezug heute"),
-    "grid_export_today": ("Grid export today", "Einspeisung heute"),
-    "base_load": ("Base load", "Grundlast"),
-    "extra_load_burning": ("Extra load while burning", "Mehrbezug im Brand"),
-    "dairy_power": ("Power", "Leistung"),
-    "dairy_energy": ("Energy", "Energie"),
-    "dairy_energy_today": ("Energy today", "Energie heute"),
-    "weather_temperature": ("Temperature", "Temperatur"),
-    "weather_apparent_temperature": ("Apparent temperature", "Gefühlte Temperatur"),
-    "weather_humidity": ("Humidity", "Luftfeuchte"),
-    "weather_precipitation": ("Precipitation", "Niederschlag"),
-    "weather_cloud_cover": ("Cloud cover", "Bewölkung"),
-    "weather_pressure": ("Pressure", "Luftdruck"),
-    "weather_wind": ("Wind speed", "Wind"),
-    "weather_gusts": ("Gusts", "Böen"),
-    "weather_wind_direction": ("Wind direction", "Windrichtung"),
-    "weather_radiation": ("Solar radiation", "Einstrahlung"),
-    "weather_code": ("Weather code (WMO)", "Wettercode (WMO)"),
     "age_boiler": ("Data age boiler", "Datenalter Kessel"),
     "age_solar": ("Data age solar", "Datenalter Solar"),
-    "age_grid": ("Data age meter", "Datenalter Stromzähler"),
-    "age_dairy_room": ("Data age sub-meter", "Datenalter Milchkammer"),
-    "age_weather": ("Data age weather", "Datenalter Wetter"),
     "database_size": ("Database size", "Datenbankgröße"),
     "disk_free": ("Free disk space", "Freier Speicher"),
 }
@@ -123,8 +92,7 @@ BINAER = {
 }
 GERAETE = {
     "boiler": ("Boiler", "Kessel"), "solar": ("Solar thermal", "Solarthermie"),
-    "grid": ("Electricity meter", "Stromzähler"), "dairy_room": ("Dairy room", "Milchkammer"),
-    "weather": ("Weather (Open-Meteo)", "Wetter (Open-Meteo)"), "logger": ("Data logger", "Datenlogger"),
+    "logger": ("Data logger", "Datenlogger"),
 }
 FELD = {
     "host": ("Host", "Adresse"), "port": ("Port", "Port"), "token": ("Token", "Token"),
@@ -188,18 +156,6 @@ def baue(i):
             "error": {k: t(v) for k, v in FEHLER.items()},
             "abort": {k: t(v) for k, v in ABBRUCH.items()},
         },
-        "options": {
-            "step": {
-                "init": {
-                    "title": t(("Devices", "Geräte")),
-                    "description": t((
-                        "Choose which devices to create. Deselect the meter if it is already integrated elsewhere.",
-                        "Wähle, welche Geräte angelegt werden. Den Stromzähler abwählen, wenn er schon anders eingebunden ist.")),
-                    "data": {"sources": t(("Devices", "Geräte"))},
-                }
-            }
-        },
-        "selector": {"sources": {"options": {k: t(v) for k, v in GERAETE.items()}}},
         "device": {k: {"name": t(v)} for k, v in GERAETE.items()},
         "entity": {
             "sensor": sensor,

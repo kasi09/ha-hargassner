@@ -6,9 +6,6 @@ from homeassistant.config_entries import ConfigEntryState
 from homeassistant.const import STATE_UNAVAILABLE
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
-from pytest_homeassistant_custom_component.common import MockConfigEntry
-
-from custom_components.hargassner_hsv.const import CONF_SOURCES
 
 from .conftest import BASE, load
 
@@ -41,10 +38,6 @@ async def test_setup_and_values(hass: HomeAssistant, mock_pi, config_entry) -> N
     assert s.attributes["origin"] == "calculated"
     assert s.attributes["flow_assumption_l_h"] == 48.0
 
-    s = hass.states.get(eid(hass, "grid_import_energy"))
-    assert s.attributes["state_class"] == "total_increasing"
-    assert s.attributes["device_class"] == "energy"
-
     s = hass.states.get(eid(hass, "solar_heat_total"))
     assert s.attributes["state_class"] == "total_increasing"
 
@@ -66,7 +59,7 @@ async def test_disabled_by_default(hass, mock_pi, config_entry) -> None:
     mock_pi()
     await setup(hass, config_entry)
     reg = er.async_get(hass)
-    for key in ("weather_temperature", "solar_meter_raw", "counter_a", "o2_target"):
+    for key in ("solar_meter_raw", "solar_flow", "counter_a", "o2_target"):
         assert reg.async_get(eid(hass, key)).disabled_by is er.RegistryEntryDisabler.INTEGRATION
 
 
@@ -81,17 +74,15 @@ async def test_stale_source_unavailable(hass, mock_pi, config_entry) -> None:
     assert hass.states.get(eid(hass, "boiler_temp")).state != STATE_UNAVAILABLE
 
 
-async def test_deselected_source_has_no_entities(hass, mock_pi, entry_data) -> None:
+async def test_only_heat_devices(hass, mock_pi, config_entry) -> None:
+    """Meter, sub-meter and weather are read directly by HA, not via this integration."""
     mock_pi()
-    entry = MockConfigEntry(
-        domain="hargassner_hsv", unique_id="00000000-0000-4000-8000-000000000001",
-        data=entry_data, options={CONF_SOURCES: ["boiler", "solar", "logger"]},
-    )
-    await setup(hass, entry)
+    await setup(hass, config_entry)
     reg = er.async_get(hass)
-    assert reg.async_get_entity_id(
-        "sensor", "hargassner_hsv", "00000000-0000-4000-8000-000000000001_grid_import_power"
-    ) is None
+    for key in ("grid_import_power", "dairy_power", "weather_temperature", "base_load"):
+        assert reg.async_get_entity_id(
+            "sensor", "hargassner_hsv", f"00000000-0000-4000-8000-000000000001_{key}"
+        ) is None
 
 
 async def test_auth_failure_starts_reauth(hass, aioclient_mock, config_entry) -> None:
@@ -138,7 +129,7 @@ async def test_devices_linked_to_hub(hass, mock_pi, config_entry) -> None:
         for ident in d.identifiers
     }
     hub, boiler = devices.get(f"{iid}_logger"), devices.get(f"{iid}_boiler")
-    assert len(devices) == 6
+    assert len(devices) == 3
     assert hub and boiler
     assert boiler.via_device_id == hub.id
     assert boiler.sw_version == "282182h / SMS V4.3h"

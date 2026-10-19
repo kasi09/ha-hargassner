@@ -5,7 +5,6 @@ from typing import Final
 
 DOMAIN: Final = "hargassner_hsv"
 
-CONF_SOURCES: Final = "sources"
 DEFAULT_PORT: Final = 8080
 
 # The Pi API contract this integration speaks (api/ha_v1.schema.json).
@@ -18,8 +17,9 @@ TIMEOUT_FAST: Final = 10
 # /totals needs about 2.5 s on the Pi, more right after a restart.
 TIMEOUT_TOTALS: Final = 30
 
-# Devices of one config entry. "logger" is the Pi itself and acts as the hub.
-SOURCES: Final = ("boiler", "solar", "grid", "dairy_room", "weather", "logger")
+# Devices of one config entry: the two heat sources wired to the Pi, and the
+# Pi itself as hub. Meter, sub-meter and weather are read directly by HA.
+SOURCES: Final = ("boiler", "solar", "logger")
 
 BOILER_STATES: Final = [
     "off", "refill_soon", "refill", "grate_check", "start",

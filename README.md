@@ -1,16 +1,15 @@
 # Hargassner HSV — Home Assistant integration
 
-Brings a **Hargassner HSV 22** pellet boiler (Lambdatronic controller), its
-**ESR21** solar thermal controller and the house **electricity meter** into
-Home Assistant.
+Brings a **Hargassner HSV 22** pellet boiler (Lambdatronic controller) and its
+**ESR21** solar thermal controller into Home Assistant — the two heat sources
+of the same hot water tank.
 
 The data comes from a Raspberry Pi that records the boiler over its RS232
-service port, the solar controller over the DL bus and the meter over an IR
-reader. This integration only reads from that Pi's HTTP API (`/api/ha/v1`);
+service port and the solar controller over the DL bus. This integration only reads from that Pi's HTTP API (`/api/ha/v1`);
 it never talks to the boiler itself. **It is read-only by design** — the
 boiler only transmits, there is no way back.
 
-> **Status: 0.1 — built for one specific installation.** The Pi side
+> **Status: 0.2 — built for one specific installation.** The Pi side
 > (`hsv-web` with `ha_api.py`) is not published yet. Without it this
 > integration has nothing to connect to.
 
@@ -20,9 +19,6 @@ boiler only transmits, there is no way back.
 |---|---|
 | Boiler | state (15 states, translated), temperatures, O₂, output, **current heat (kW)**, hot water and heating circuit mode, heat and pellets today/total, burner starts |
 | Solar thermal | collector, tank bottom, spread, pump, **current solar heat (kW)**, solar heat today/total |
-| Electricity meter | import/export power and energy (1.8.0 / 2.8.0) — **ready for the Energy dashboard**, base load |
-| Sub-meter | power and energy |
-| Weather | the Open-Meteo values the Pi calculates with (disabled by default) |
 | Data logger | service status, data age per source, database size |
 
 ### Calculated, not measured
@@ -39,9 +35,13 @@ assumptions as attributes):
 Solar heat is **not electricity** — do not add it to the Energy dashboard's
 solar panel field.
 
+Electricity meters and weather are deliberately **not** part of this
+integration: devices Home Assistant can read itself (e.g. Tasmota meters,
+Open-Meteo) belong in their own integrations.
+
 ### Statistics done right
 
-* Real meters (grid, cleaned solar total) use `total_increasing`.
+* The cleaned solar total uses `total_increasing`.
 * The solar total is cleaned on the Pi: the raw ESR21 meter contains
   glitches (single readings of 1025 and 2050 MWh) that would otherwise add
   about 1 GWh of phantom yield to the long-term statistics.
@@ -58,9 +58,6 @@ solar panel field.
 3. *Settings → Devices & services → Add integration → Hargassner HSV*.
 4. Enter the Pi's address, port (8080) and the token. Show the token on the
    Pi with `cat ~/heizung/ha_token`.
-
-Devices can be deselected later under *Configure*, e.g. the electricity
-meter if it is already integrated another way.
 
 ## License
 

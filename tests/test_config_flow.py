@@ -7,7 +7,7 @@ from homeassistant.const import CONF_HOST, CONF_PORT, CONF_TOKEN
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
 
-from custom_components.hargassner_hsv.const import CONF_SOURCES, DOMAIN
+from custom_components.hargassner_hsv.const import DOMAIN
 
 from .conftest import BASE, INSTALLATION_ID, load
 
@@ -23,8 +23,6 @@ async def test_user_flow_success(hass: HomeAssistant, aioclient_mock, entry_data
     assert result["type"] is FlowResultType.CREATE_ENTRY
     assert result["title"] == "Hargassner HSV 22"
     assert result["result"].unique_id == INSTALLATION_ID
-    assert "logger" in result["options"][CONF_SOURCES]
-    assert "dairy_room" in result["options"][CONF_SOURCES]
     # the token is sent as bearer header
     assert aioclient_mock.mock_calls[-1][3]["Authorization"] == "Bearer test-token-nicht-echt"
 

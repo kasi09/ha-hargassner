@@ -10,7 +10,7 @@ import pytest
 from homeassistant.const import CONF_HOST, CONF_PORT, CONF_TOKEN
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.hargassner_hsv.const import CONF_SOURCES, DOMAIN, SOURCES
+from custom_components.hargassner_hsv.const import DOMAIN
 
 FIXTURES = Path(__file__).parent / "fixtures"
 HOST, PORT, TOKEN = "pi.example", 8080, "test-token-nicht-echt"
@@ -38,7 +38,6 @@ def config_entry(entry_data) -> MockConfigEntry:
         domain=DOMAIN,
         unique_id=INSTALLATION_ID,
         data=entry_data,
-        options={CONF_SOURCES: list(SOURCES)},
         title="Hargassner HSV 22",
     )
 

@@ -6,19 +6,10 @@ from collections.abc import Mapping
 from typing import Any
 
 import voluptuous as vol
-from homeassistant.config_entries import (
-    ConfigEntry,
-    ConfigFlow,
-    ConfigFlowResult,
-    OptionsFlow,
-)
+from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.const import CONF_HOST, CONF_PORT, CONF_TOKEN
-from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.selector import (
-    SelectSelector,
-    SelectSelectorConfig,
-    SelectSelectorMode,
     TextSelector,
     TextSelectorConfig,
     TextSelectorType,
@@ -26,7 +17,7 @@ from homeassistant.helpers.selector import (
 
 from . import api_supported
 from .api import HargassnerApi, HargassnerApiError, HargassnerAuthError
-from .const import CONF_SOURCES, DEFAULT_PORT, DOMAIN, SOURCES
+from .const import DEFAULT_PORT, DOMAIN
 
 TOKEN_SELECTOR = TextSelector(TextSelectorConfig(type=TextSelectorType.PASSWORD))
 
@@ -39,12 +30,6 @@ USER_SCHEMA = vol.Schema(
         vol.Required(CONF_TOKEN): TOKEN_SELECTOR,
     }
 )
-
-
-def available_sources(info: dict[str, Any]) -> list[str]:
-    """Sources the Pi reports, plus the Pi itself."""
-    reported = info.get("sources", {})
-    return [s for s in SOURCES if s == "logger" or reported.get(s)]
 
 
 async def _validate(hass, data: Mapping[str, Any]) -> tuple[dict | None, str | None]:
@@ -81,7 +66,6 @@ class HargassnerConfigFlow(ConfigFlow, domain=DOMAIN):
                 return self.async_create_entry(
                     title=f"{info.get('manufacturer', 'Hargassner')} {info.get('model', '')}".strip(),
                     data=user_input,
-                    options={CONF_SOURCES: available_sources(info)},
                 )
         return self.async_show_form(
             step_id="user",
@@ -136,33 +120,3 @@ class HargassnerConfigFlow(ConfigFlow, domain=DOMAIN):
             ),
             errors=errors,
         )
-
-    @staticmethod
-    @callback
-    def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
-        return HargassnerOptionsFlow()
-
-
-class HargassnerOptionsFlow(OptionsFlow):
-    """Choose which devices to create, e.g. to avoid a second electricity meter."""
-
-    async def async_step_init(
-        self, user_input: dict[str, Any] | None = None
-    ) -> ConfigFlowResult:
-        if user_input is not None:
-            return self.async_create_entry(data=user_input)
-        offered = available_sources(self.config_entry.runtime_data.info)
-        current = self.config_entry.options.get(CONF_SOURCES, offered)
-        schema = vol.Schema(
-            {
-                vol.Required(CONF_SOURCES, default=current): SelectSelector(
-                    SelectSelectorConfig(
-                        options=offered,
-                        multiple=True,
-                        mode=SelectSelectorMode.LIST,
-                        translation_key="sources",
-                    )
-                )
-            }
-        )
-        return self.async_show_form(step_id="init", data_schema=schema)

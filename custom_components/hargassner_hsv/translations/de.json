@@ -50,44 +50,12 @@
       "wrong_installation": "Das ist eine andere Anlage."
     }
   },
-  "options": {
-    "step": {
-      "init": {
-        "title": "Geräte",
-        "description": "Wähle, welche Geräte angelegt werden. Den Stromzähler abwählen, wenn er schon anders eingebunden ist.",
-        "data": {
-          "sources": "Geräte"
-        }
-      }
-    }
-  },
-  "selector": {
-    "sources": {
-      "options": {
-        "boiler": "Kessel",
-        "solar": "Solarthermie",
-        "grid": "Stromzähler",
-        "dairy_room": "Milchkammer",
-        "weather": "Wetter (Open-Meteo)",
-        "logger": "Datenlogger"
-      }
-    }
-  },
   "device": {
     "boiler": {
       "name": "Kessel"
     },
     "solar": {
       "name": "Solarthermie"
-    },
-    "grid": {
-      "name": "Stromzähler"
-    },
-    "dairy_room": {
-      "name": "Milchkammer"
-    },
-    "weather": {
-      "name": "Wetter (Open-Meteo)"
     },
     "logger": {
       "name": "Datenlogger"
@@ -271,104 +239,11 @@
       "solar_pump_starts_today": {
         "name": "Starts Solarpumpe heute"
       },
-      "grid_import_power": {
-        "name": "Netzbezug"
-      },
-      "grid_export_power": {
-        "name": "Einspeisung"
-      },
-      "grid_net_power": {
-        "name": "Netto-Bezug"
-      },
-      "grid_import_energy": {
-        "name": "Bezug gesamt (1.8.0)"
-      },
-      "grid_export_energy": {
-        "name": "Einspeisung gesamt (2.8.0)"
-      },
-      "grid_reactive_import_power": {
-        "name": "Blindleistung Q+"
-      },
-      "grid_reactive_export_power": {
-        "name": "Blindleistung Q-"
-      },
-      "grid_reactive_import_energy": {
-        "name": "Blindenergie R+"
-      },
-      "grid_reactive_export_energy": {
-        "name": "Blindenergie R-"
-      },
-      "grid_collection_energy": {
-        "name": "Inkasso-Energie (1.128.0)"
-      },
-      "grid_import_today": {
-        "name": "Bezug heute"
-      },
-      "grid_export_today": {
-        "name": "Einspeisung heute"
-      },
-      "base_load": {
-        "name": "Grundlast"
-      },
-      "extra_load_burning": {
-        "name": "Mehrbezug im Brand"
-      },
-      "dairy_power": {
-        "name": "Leistung"
-      },
-      "dairy_energy": {
-        "name": "Energie"
-      },
-      "dairy_energy_today": {
-        "name": "Energie heute"
-      },
-      "weather_temperature": {
-        "name": "Temperatur"
-      },
-      "weather_apparent_temperature": {
-        "name": "Gefühlte Temperatur"
-      },
-      "weather_humidity": {
-        "name": "Luftfeuchte"
-      },
-      "weather_precipitation": {
-        "name": "Niederschlag"
-      },
-      "weather_cloud_cover": {
-        "name": "Bewölkung"
-      },
-      "weather_pressure": {
-        "name": "Luftdruck"
-      },
-      "weather_wind": {
-        "name": "Wind"
-      },
-      "weather_gusts": {
-        "name": "Böen"
-      },
-      "weather_wind_direction": {
-        "name": "Windrichtung"
-      },
-      "weather_radiation": {
-        "name": "Einstrahlung"
-      },
-      "weather_code": {
-        "name": "Wettercode (WMO)"
-      },
       "age_boiler": {
         "name": "Datenalter Kessel"
       },
       "age_solar": {
         "name": "Datenalter Solar"
-      },
-      "age_grid": {
-        "name": "Datenalter Stromzähler"
-      },
-      "age_dairy_room": {
-        "name": "Datenalter Milchkammer"
-      },
-      "age_weather": {
-        "name": "Datenalter Wetter"
       },
       "database_size": {
         "name": "Datenbankgröße"

@@ -16,7 +16,6 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import HargassnerConfigEntry
-from .const import CONF_SOURCES, SOURCES
 from .entity import HargassnerEntity, HargassnerEntityDescription
 
 SERVICES = ("hsv-logger", "hsv-solar", "hsv-strom", "hsv-web", "hsv-waechter")
@@ -65,11 +64,8 @@ async def async_setup_entry(
     entry: HargassnerConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    selected = entry.options.get(CONF_SOURCES, list(SOURCES))
     runtime = entry.runtime_data
-    async_add_entities(
-        HargassnerBinarySensor(runtime, d) for d in DESCRIPTIONS if d.device in selected
-    )
+    async_add_entities(HargassnerBinarySensor(runtime, d) for d in DESCRIPTIONS)
 
 
 class HargassnerBinarySensor(HargassnerEntity, BinarySensorEntity):

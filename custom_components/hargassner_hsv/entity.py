@@ -15,9 +15,6 @@ from .coordinator import HargassnerCoordinator, HargassnerRuntime
 DEVICE_MODEL: dict[str, tuple[str | None, str]] = {
     "boiler": ("Hargassner", "HSV 22"),
     "solar": ("Technische Alternative", "ESR21"),
-    "grid": (None, "Electricity meter (IR reader)"),
-    "dairy_room": (None, "Sub-meter"),
-    "weather": ("Open-Meteo", "Weather model"),
     "logger": ("Raspberry Pi", "hsv-web data logger"),
 }
 

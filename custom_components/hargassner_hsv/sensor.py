@@ -6,7 +6,7 @@ assumptions they depend on as attributes - the same disclosure as on the
 Pi's own web page.
 
 Statistics rules (see README, "Statistics done right"):
-* Device meters (grid 1.8.0/2.8.0, cleaned solar total) are TOTAL_INCREASING.
+* The cleaned solar total is TOTAL_INCREASING.
 * Calculated grand totals (heat, pellets) are TOTAL: they are recalculated
   from the whole history and drop when an assumption is corrected.
 * Daily values are TOTAL with last_reset at local midnight.
@@ -26,20 +26,14 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.const import (
-    DEGREE,
     PERCENTAGE,
     REVOLUTIONS_PER_MINUTE,
     EntityCategory,
     UnitOfElectricCurrent,
     UnitOfEnergy,
     UnitOfInformation,
-    UnitOfIrradiance,
     UnitOfMass,
     UnitOfPower,
-    UnitOfPrecipitationDepth,
-    UnitOfPressure,
-    UnitOfReactivePower,
-    UnitOfSpeed,
     UnitOfTemperature,
     UnitOfTime,
 )
@@ -49,7 +43,7 @@ from homeassistant.helpers.typing import StateType
 from homeassistant.util import dt as dt_util
 
 from . import HargassnerConfigEntry
-from .const import BOILER_STATES, CONF_SOURCES, DHW_MODES, HK1_MODES, SOURCES
+from .const import BOILER_STATES, DHW_MODES, HK1_MODES
 from .entity import HargassnerEntity, HargassnerEntityDescription
 
 M = SensorStateClass.MEASUREMENT
@@ -104,13 +98,6 @@ def solar_calc(_d: dict[str, Any], info: dict[str, Any]) -> dict[str, Any]:
             "trends and day-to-day comparisons are reliable. Current power and "
             "the energy meter differ by the scale mismatch factor (unresolved)."
         ),
-    }
-
-
-def household_note(_d: dict[str, Any], _info: dict[str, Any]) -> dict[str, Any]:
-    return {
-        "origin": "calculated",
-        "note": "Whole household, pure full-load minutes minus pure off minutes.",
     }
 
 
@@ -348,126 +335,6 @@ SOLAR: tuple[HargassnerSensorDescription, ...] = (
 )
 
 
-def power(key: str, field: str, device: str, source: str, **kw: Any) -> HargassnerSensorDescription:
-    return HargassnerSensorDescription(
-        key=key, translation_key=key, device=device, source=source,
-        device_class=SensorDeviceClass.POWER, native_unit_of_measurement=UnitOfPower.WATT,
-        state_class=M, suggested_display_precision=0, value_fn=v(source, field), **kw,
-    )
-
-
-def meter(key: str, field: str, device: str, source: str, **kw: Any) -> HargassnerSensorDescription:
-    return HargassnerSensorDescription(
-        key=key, translation_key=key, device=device, source=source,
-        device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR, state_class=TI,
-        suggested_display_precision=3, value_fn=v(source, field), **kw,
-    )
-
-
-GRID: tuple[HargassnerSensorDescription, ...] = (
-    power("grid_import_power", "import_power_w", "grid", "grid"),
-    power("grid_export_power", "export_power_w", "grid", "grid"),
-    power("grid_net_power", "net_power_w", "grid", "grid"),
-    meter("grid_import_energy", "import_kwh", "grid", "grid"),
-    meter("grid_export_energy", "export_kwh", "grid", "grid"),
-    *(
-        HargassnerSensorDescription(
-            key=key, translation_key=key, device="grid", source="grid",
-            device_class=SensorDeviceClass.REACTIVE_POWER,
-            native_unit_of_measurement=UnitOfReactivePower.VOLT_AMPERE_REACTIVE,
-            state_class=M, entity_registry_enabled_default=False, value_fn=v("grid", field),
-        )
-        for key, field in (("grid_reactive_import_power", "reactive_import_var"),
-                           ("grid_reactive_export_power", "reactive_export_var"))
-    ),
-    *(
-        HargassnerSensorDescription(
-            key=key, translation_key=key, device="grid", source="grid",
-            native_unit_of_measurement="kvarh", state_class=TI,
-            entity_registry_enabled_default=False, value_fn=v("grid", field),
-        )
-        for key, field in (("grid_reactive_import_energy", "reactive_import_kvarh"),
-                           ("grid_reactive_export_energy", "reactive_export_kvarh"))
-    ),
-    meter("grid_collection_energy", "collection_kwh", "grid", "grid",
-          entity_registry_enabled_default=False),
-    HargassnerSensorDescription(
-        key="grid_import_today", translation_key="grid_import_today", device="grid",
-        coordinator="totals", device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR, state_class=T, daily=True,
-        suggested_display_precision=2, value_fn=v("grid", "import_today_kwh"),
-    ),
-    HargassnerSensorDescription(
-        key="grid_export_today", translation_key="grid_export_today", device="grid",
-        coordinator="totals", device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR, state_class=T, daily=True,
-        suggested_display_precision=2, value_fn=v("grid", "export_today_kwh"),
-    ),
-    HargassnerSensorDescription(
-        key="base_load", translation_key="base_load", device="grid", coordinator="totals",
-        device_class=SensorDeviceClass.POWER, native_unit_of_measurement=UnitOfPower.WATT,
-        state_class=M, suggested_display_precision=0, value_fn=v("grid", "base_load_w"),
-        attrs_fn=lambda _d, _i: {"note": "Lowest net import 00-05 h, last 24 h."},
-    ),
-    HargassnerSensorDescription(
-        key="extra_load_burning", translation_key="extra_load_burning", device="grid",
-        coordinator="totals", device_class=SensorDeviceClass.POWER,
-        native_unit_of_measurement=UnitOfPower.WATT, state_class=M,
-        suggested_display_precision=0, value_fn=v("grid", "extra_load_burning_w"),
-        attrs_fn=household_note,
-    ),
-)
-
-DAIRY: tuple[HargassnerSensorDescription, ...] = (
-    power("dairy_power", "power_w", "dairy_room", "dairy_room"),
-    meter("dairy_energy", "energy_kwh", "dairy_room", "dairy_room"),
-    HargassnerSensorDescription(
-        key="dairy_energy_today", translation_key="dairy_energy_today",
-        device="dairy_room", coordinator="totals", device_class=SensorDeviceClass.ENERGY,
-        native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR, state_class=T, daily=True,
-        suggested_display_precision=2, value_fn=v("dairy_room", "energy_today_kwh"),
-    ),
-)
-
-
-def weather(key: str, field: str, **kw: Any) -> HargassnerSensorDescription:
-    # HA has its own weather integrations; these are the values the Pi
-    # calculates with, so they are disabled by default.
-    return HargassnerSensorDescription(
-        key=key, translation_key=key, device="weather", source="weather",
-        state_class=M, entity_registry_enabled_default=False,
-        value_fn=v("weather", field), **kw,
-    )
-
-
-WEATHER: tuple[HargassnerSensorDescription, ...] = (
-    weather("weather_temperature", "temperature_c", device_class=SensorDeviceClass.TEMPERATURE,
-            native_unit_of_measurement=C),
-    weather("weather_apparent_temperature", "apparent_temperature_c",
-            device_class=SensorDeviceClass.TEMPERATURE, native_unit_of_measurement=C),
-    weather("weather_humidity", "humidity_percent", device_class=SensorDeviceClass.HUMIDITY,
-            native_unit_of_measurement=PERCENTAGE),
-    weather("weather_precipitation", "precipitation_mm",
-            device_class=SensorDeviceClass.PRECIPITATION,
-            native_unit_of_measurement=UnitOfPrecipitationDepth.MILLIMETERS),
-    weather("weather_cloud_cover", "cloud_cover_percent", native_unit_of_measurement=PERCENTAGE),
-    weather("weather_pressure", "pressure_hpa", device_class=SensorDeviceClass.ATMOSPHERIC_PRESSURE,
-            native_unit_of_measurement=UnitOfPressure.HPA),
-    weather("weather_wind", "wind_kmh", device_class=SensorDeviceClass.WIND_SPEED,
-            native_unit_of_measurement=UnitOfSpeed.KILOMETERS_PER_HOUR),
-    weather("weather_gusts", "gusts_kmh", device_class=SensorDeviceClass.WIND_SPEED,
-            native_unit_of_measurement=UnitOfSpeed.KILOMETERS_PER_HOUR),
-    weather("weather_wind_direction", "wind_direction_deg", native_unit_of_measurement=DEGREE),
-    weather("weather_radiation", "radiation_w_m2", device_class=SensorDeviceClass.IRRADIANCE,
-            native_unit_of_measurement=UnitOfIrradiance.WATTS_PER_SQUARE_METER),
-    HargassnerSensorDescription(
-        key="weather_code", translation_key="weather_code", device="weather",
-        source="weather", entity_registry_enabled_default=False,
-        value_fn=v("weather", "weather_code"),
-    ),
-)
-
 LOGGER: tuple[HargassnerSensorDescription, ...] = (
     *(
         HargassnerSensorDescription(
@@ -475,10 +342,9 @@ LOGGER: tuple[HargassnerSensorDescription, ...] = (
             device_class=SensorDeviceClass.DURATION,
             native_unit_of_measurement=UnitOfTime.SECONDS, state_class=M,
             suggested_display_precision=0, entity_category=DIAG,
-            entity_registry_enabled_default=s in ("boiler", "solar", "grid"),
             value_fn=age(s),
         )
-        for s in ("boiler", "solar", "grid", "dairy_room", "weather")
+        for s in ("boiler", "solar")
     ),
     HargassnerSensorDescription(
         key="database_size", translation_key="database_size", device="logger",
@@ -497,7 +363,7 @@ LOGGER: tuple[HargassnerSensorDescription, ...] = (
 )
 
 DESCRIPTIONS: tuple[HargassnerSensorDescription, ...] = (
-    *BOILER, *SOLAR, *GRID, *DAIRY, *WEATHER, *LOGGER,
+    *BOILER, *SOLAR, *LOGGER,
 )
 
 
@@ -506,11 +372,8 @@ async def async_setup_entry(
     entry: HargassnerConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    selected = entry.options.get(CONF_SOURCES, list(SOURCES))
     runtime = entry.runtime_data
-    async_add_entities(
-        HargassnerSensor(runtime, d) for d in DESCRIPTIONS if d.device in selected
-    )
+    async_add_entities(HargassnerSensor(runtime, d) for d in DESCRIPTIONS)
 
 
 class HargassnerSensor(HargassnerEntity, SensorEntity):

@@ -50,44 +50,12 @@
       "wrong_installation": "This is a different installation."
     }
   },
-  "options": {
-    "step": {
-      "init": {
-        "title": "Devices",
-        "description": "Choose which devices to create. Deselect the meter if it is already integrated elsewhere.",
-        "data": {
-          "sources": "Devices"
-        }
-      }
-    }
-  },
-  "selector": {
-    "sources": {
-      "options": {
-        "boiler": "Boiler",
-        "solar": "Solar thermal",
-        "grid": "Electricity meter",
-        "dairy_room": "Dairy room",
-        "weather": "Weather (Open-Meteo)",
-        "logger": "Data logger"
-      }
-    }
-  },
   "device": {
     "boiler": {
       "name": "Boiler"
     },
     "solar": {
       "name": "Solar thermal"
-    },
-    "grid": {
-      "name": "Electricity meter"
-    },
-    "dairy_room": {
-      "name": "Dairy room"
-    },
-    "weather": {
-      "name": "Weather (Open-Meteo)"
     },
     "logger": {
       "name": "Data logger"
@@ -271,104 +239,11 @@
       "solar_pump_starts_today": {
         "name": "Solar pump starts today"
       },
-      "grid_import_power": {
-        "name": "Grid import power"
-      },
-      "grid_export_power": {
-        "name": "Grid export power"
-      },
-      "grid_net_power": {
-        "name": "Grid net power"
-      },
-      "grid_import_energy": {
-        "name": "Grid import energy (1.8.0)"
-      },
-      "grid_export_energy": {
-        "name": "Grid export energy (2.8.0)"
-      },
-      "grid_reactive_import_power": {
-        "name": "Reactive power Q+"
-      },
-      "grid_reactive_export_power": {
-        "name": "Reactive power Q-"
-      },
-      "grid_reactive_import_energy": {
-        "name": "Reactive energy R+"
-      },
-      "grid_reactive_export_energy": {
-        "name": "Reactive energy R-"
-      },
-      "grid_collection_energy": {
-        "name": "Collection energy (1.128.0)"
-      },
-      "grid_import_today": {
-        "name": "Grid import today"
-      },
-      "grid_export_today": {
-        "name": "Grid export today"
-      },
-      "base_load": {
-        "name": "Base load"
-      },
-      "extra_load_burning": {
-        "name": "Extra load while burning"
-      },
-      "dairy_power": {
-        "name": "Power"
-      },
-      "dairy_energy": {
-        "name": "Energy"
-      },
-      "dairy_energy_today": {
-        "name": "Energy today"
-      },
-      "weather_temperature": {
-        "name": "Temperature"
-      },
-      "weather_apparent_temperature": {
-        "name": "Apparent temperature"
-      },
-      "weather_humidity": {
-        "name": "Humidity"
-      },
-      "weather_precipitation": {
-        "name": "Precipitation"
-      },
-      "weather_cloud_cover": {
-        "name": "Cloud cover"
-      },
-      "weather_pressure": {
-        "name": "Pressure"
-      },
-      "weather_wind": {
-        "name": "Wind speed"
-      },
-      "weather_gusts": {
-        "name": "Gusts"
-      },
-      "weather_wind_direction": {
-        "name": "Wind direction"
-      },
-      "weather_radiation": {
-        "name": "Solar radiation"
-      },
-      "weather_code": {
-        "name": "Weather code (WMO)"
-      },
       "age_boiler": {
         "name": "Data age boiler"
       },
       "age_solar": {
         "name": "Data age solar"
-      },
-      "age_grid": {
-        "name": "Data age meter"
-      },
-      "age_dairy_room": {
-        "name": "Data age sub-meter"
-      },
-      "age_weather": {
-        "name": "Data age weather"
       },
       "database_size": {
         "name": "Database size"
